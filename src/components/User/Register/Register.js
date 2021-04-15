@@ -2,7 +2,7 @@ import { useState } from "react"
 import { Form, Button, Container, Row } from 'react-bootstrap'
 import Firebase from 'firebase';
 
-const Register = () => {
+const UserRegister = () => {
 
   const initialState = {
     email: '',
@@ -150,4 +150,4 @@ const Register = () => {
     );
 }
 
-  export default Register;
+  export default UserRegister;
