@@ -1,18 +1,20 @@
-import { useState } from "react"
+import React, { useState, useEffect } from "react"
 import { Form, Button, Container, Row } from 'react-bootstrap'
 import Firebase from 'firebase';
 
-const initialStateData = {
-  email: '',
-  password: '' 
-};
-
-const initialStateErrors = {
-  emailError: '',
-  passwordError: ''
-};
 
 const UserLogin = () => {
+
+  const initialStateData = {
+  email: '',
+  password: '' 
+  };
+
+  const initialStateErrors = {
+  emailError: '',
+  passwordError: ''
+  };
+
   const [dados, setDados] = useState(initialStateData);
   const [errors, setErrors] = useState(initialStateErrors);
 
@@ -153,4 +155,4 @@ const UserLogin = () => {
     );
 }
 
-  export default UserLogin;
+export default UserLogin;
