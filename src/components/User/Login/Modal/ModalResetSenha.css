@@ -1,0 +1,11 @@
+.modal-header {
+    position: relative;
+}
+
+.btn__x {
+    position: absolute;
+    top: 0;
+    right: 20px;
+    font-size: 40px;
+    cursor: pointer;
+}
