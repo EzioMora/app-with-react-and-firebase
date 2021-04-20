@@ -1,8 +1,14 @@
-import { useState } from "react"
+import { useState, useContext } from "react"
 import { Form, Button, Container, Row } from 'react-bootstrap'
 import Firebase from 'firebase';
+import { useHistory } from "react-router-dom";
+import './Register.css'
+import Context from '../../Context/Context'
 
 const UserRegister = () => {
+
+  let history = useHistory();
+
 
   const initialState = {
     email: '',
@@ -12,11 +18,14 @@ const UserRegister = () => {
   };
 
   const [dados, setDados] = useState(initialState);
+  const { setToken } = useContext(Context);
+
 
   const handleInputChange = (event) => {
+    const { value, name } = event.target
     setDados({
       ...dados,
-      [event.target.name]: event.target.value
+      [name]: value
     })
   };
 
@@ -60,18 +69,26 @@ const UserRegister = () => {
   }
 
   function handleSubmit(event) {
+    
 
     event.preventDefault();
 
     const isValid = validate();
     if (isValid) {
 
+      
+
       Firebase.auth().createUserWithEmailAndPassword(dados.email, dados.password)
-      .then((userCredential) => {
-        // Signed in
-        var user = userCredential.user;
-        console.log({ user })
-        // ...
+        .then((userCredential) => {
+          
+          // localStorage.setItem('authToken', userCredential.user.uid)
+          setToken(userCredential.user.uid);
+          history.push('/dashboard')
+
+          // Firebase.firestore().collection(dados.email).doc(dados.email)
+          //   .collection("pessoas");
+          //   // .add({pessoas: "nada"});
+          
       })
       .catch((error) => {
         var errorCode = error.code;
@@ -94,14 +111,21 @@ const UserRegister = () => {
         // ..
       });
 
+    
+
     setDados(initialState);
     }
   }
 
+  const redirectLogin = () => {
+    history.push("/login")
+  };
+
   return (
       <Container className="app" fluid>
         <Row className="row justify-content-center mt-4">
-          <Form className="col-2 bg-light p-4 shadow">
+        <Form className="col-2 bg-light p-4 shadow">
+          <h1>Cadastre-se</h1>
             <Form.Group controlId="formBasicEmail">
                 <Form.Label>Email</Form.Label>
             <Form.Control
@@ -141,9 +165,13 @@ const UserRegister = () => {
             variant="primary"
             type="submit"
             onClick={handleSubmit}
+            className="btn-lg btn-block"
           >
-                  Cadastrar
+            Cadastrar
             </Button>
+          <Form.Text className="text-muted text-right">
+            Já tem uma conta? <span className="text-primary pointer" onClick={redirectLogin}>Acessar</span>
+          </Form.Text>
           </Form>
         </Row>
       </Container>

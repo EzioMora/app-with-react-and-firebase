@@ -7,6 +7,7 @@ import Root from './pages/Root'
 import "bootstrap/dist/css/bootstrap.min.css"
 import "./firebase"
 
+
 ReactDOM.render(
   <React.StrictMode>
     <Root />
